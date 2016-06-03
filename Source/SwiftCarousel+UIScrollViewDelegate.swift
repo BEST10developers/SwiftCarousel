@@ -20,49 +20,51 @@
 * THE SOFTWARE.
 */
 
+import UIKit
+
 extension SwiftCarousel: UIScrollViewDelegate {
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         didSelectItem()
     }
-    
+
     public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
         didSelectItem()
     }
-    
+
     public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         delegate?.willBeginDragging?(withOffset: scrollView.contentOffset)
     }
-    
+
     public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         delegate?.didEndDragging?(withOffset: scrollView.contentOffset)
     }
-    
+
     public func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         var velocity = velocity.x * 300.0
-        
+
         var targetX = CGRectGetWidth(scrollView.frame) / 2.0 + velocity
-        
+
         // When the target is being scrolled and we scroll again,
         // the position we need to take as base should be the destination
         // because velocity will stay and if we will take the current position
-        // we won't get correct item because the X distance we skipped in the 
+        // we won't get correct item because the X distance we skipped in the
         // last circle wasn't included in the calculations.
         if let oldTargetX = currentVelocityX {
             targetX += (oldTargetX - scrollView.contentOffset.x)
         } else {
             targetX += scrollView.contentOffset.x
         }
-        
+
         if velocity >= maxVelocity {
             velocity = maxVelocity
         } else if velocity <= -maxVelocity {
             velocity = -maxVelocity
         }
-        
+
         if (targetX > scrollView.contentSize.width || targetX < 0.0) {
             targetX = scrollView.contentSize.width / 3.0 + velocity
         }
-        
+
         let choiceView = nearestViewAtLocation(CGPoint(x: targetX, y: CGRectGetMinY(scrollView.frame)))
         let newTargetX = choiceView.center.x - scrollView.frame.width / 2.0
         currentVelocityX = newTargetX

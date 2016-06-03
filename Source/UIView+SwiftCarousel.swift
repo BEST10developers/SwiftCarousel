@@ -20,6 +20,8 @@
 * THE SOFTWARE.
 */
 
+import UIKit
+
 public enum ArchiveCopyingError: ErrorType {
     case View
 }
@@ -29,10 +31,10 @@ public extension UIView {
         constraints.forEach { $0.shouldBeArchived = true }
         subviews.forEach { $0.prepareConstraintsForArchiving() }
     }
-    
+
     /**
      Method to copy UIView using archivizing.
-     
+
      - returns: Copied UIView (different memory address than current)
      */
     public func copyView() throws -> UIView {

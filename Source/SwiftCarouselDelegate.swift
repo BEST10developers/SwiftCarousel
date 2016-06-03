@@ -20,50 +20,51 @@
 * THE SOFTWARE.
 */
 
+import UIKit
 
 @objc public protocol SwiftCarouselDelegate {
     /**
      Delegate method that fires up when item has been selected.
      If there was an animation, it fires up _after_ animation.
-     Warning! Do not rely on item to get index from your data source. 
+     Warning! Do not rely on item to get index from your data source.
      Index is passed as a variable in that function and you should use it instead.
-     
+
      - parameter item:  Item that is selected. You can style it as you want.
      - parameter index: Index of selected item that you can use with your data source.
      - parameter tapped: Indicate that the item has been tapped, true it means that it was tapped before the selection, and false that was scrolled.
-     
+
      - returns: Return UIView that you customized (or not).
      */
     optional func didSelectItem(item item: UIView, index: Int, tapped: Bool) -> UIView?
-    
+
     /**
      Delegate method that fires up when item has been deselected.
      If there was an animation, it fires up _after_ animation.
      Warning! Do not rely on item to get index from your data source.
      Index is passed as a variable in that function and you should use it instead.
-     
+
      - parameter item:  Item that is deselected. You can style it as you want.
      - parameter index: Index of deselected item that you can use with your data source.
-     
+
      - returns: Return UIView that you customized (or not).
      */
     optional func didDeselectItem(item item: UIView, index: Int) -> UIView?
-    
+
     /**
      Delegate method that fires up when Carousel has been scrolled.
-     
+
      - parameter offset: New offset of the Carousel.
      */
     optional func didScroll(toOffset offset: CGPoint)
     /**
      Delegate method that fires up just before someone did dragging.
-     
+
      - parameter offset: Current offset of the Carousel.
      */
     optional func willBeginDragging(withOffset offset: CGPoint)
     /**
      Delegate method that fires up right after someone did end dragging.
-     
+
      - parameter offset: New offset of the Carousel.
      */
     optional func didEndDragging(withOffset offset: CGPoint)

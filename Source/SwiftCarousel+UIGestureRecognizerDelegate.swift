@@ -20,8 +20,10 @@
  * THE SOFTWARE.
  */
 
+import UIKit
+
 extension SwiftCarousel: UIGestureRecognizerDelegate {
-    
+
     public func gestureRecognizer(_: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
